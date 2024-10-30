@@ -12,7 +12,6 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Zap" (
     "id" TEXT NOT NULL,
-    "triggerId" TEXT NOT NULL,
 
     CONSTRAINT "Zap_pkey" PRIMARY KEY ("id")
 );
@@ -57,7 +56,7 @@ CREATE TABLE "AvailableTrigger" (
 CREATE TABLE "ZapRun" (
     "id" TEXT NOT NULL,
     "zapId" TEXT NOT NULL,
-    "metadata" JSONB NOT NULL,
+    "metadata" JSONB NOT NULL DEFAULT '{}',
 
     CONSTRAINT "ZapRun_pkey" PRIMARY KEY ("id")
 );
@@ -72,6 +71,9 @@ CREATE TABLE "ZapOutbox" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Trigger_zapId_key" ON "Trigger"("zapId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ZapRun_zapId_key" ON "ZapRun"("zapId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ZapOutbox_zapRunId_key" ON "ZapOutbox"("zapRunId");

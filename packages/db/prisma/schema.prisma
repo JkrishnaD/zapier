@@ -13,22 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//User to Zap is one-to-many relation
 model User {
   id       Int    @id @default(autoincrement())
   name     String
   email    String
   password String
   zapId    String
-  zap      Zap    @relation(fields: [zapId], references: [id])
+  Zap      Zap    @relation(fields: [zapId], references: [id])
 }
 
 model Zap {
   id        String   @id @default(uuid())
-  triggerId String
-  actions   Action[]
-  trigger   Trigger?
-  User      User[]
-  ZapRun    ZapRun[]
+  user      User[]
+  triggerId Trigger?
+  actionId  Action[]
+  zapRunId  ZapRun[]
 }
 
 // zap to trigger is one-to-one relation
@@ -66,13 +66,14 @@ model AvailableTrigger {
 }
 
 model ZapRun {
-  id        String     @id @default(uuid())
-  zapId     String
-  metadata  Json
-  zap       Zap        @relation(fields: [zapId], references: [id])
-  ZapOutbox ZapOutbox?
+  id          String     @id @default(uuid())
+  zapId       String     @unique
+  metadata    Json       @default("{}")
+  zapOutboxId ZapOutbox?
+  zap         Zap        @relation(fields: [zapId], references: [id])
 }
 
+//ZapRun to ZapOutbox is one-to-one relation
 model ZapOutbox {
   id       String @id @default(uuid())
   zapRunId String @unique
