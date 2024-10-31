@@ -53,9 +53,10 @@ model Action {
 
 //Action to availableAction is one-to-many relation
 model AvailableActions {
-  id     String   @id @default(uuid())
-  name   String
-  Action Action[]
+  id       String   @id @default(uuid())
+  name     String
+  Action   Action[]
+  metadata Json     @default("{}")
 }
 
 // Trigger to AvailableTrigger is one-to-many relation
@@ -63,12 +64,13 @@ model AvailableTrigger {
   id       String    @id @default(uuid())
   name     String
   triggers Trigger[]
+  metadata Json      @default("{}")
 }
 
 model ZapRun {
   id          String     @id @default(uuid())
-  zapId       String     @unique
-  metadata    Json       @default("{}")
+  zapId       String
+  metadata    Json      
   zapOutboxId ZapOutbox?
   zap         Zap        @relation(fields: [zapId], references: [id])
 }

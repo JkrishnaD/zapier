@@ -4,11 +4,12 @@ import { PrismaClient } from "@prisma/client";
 const app = express();
 const client = new PrismaClient();
 app.use(express.json());
-app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
-  const userId = req.body.userId;
-  const zapId = req.body.zapId;
-  const body = req.body;
 
+app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
+  const userId = req.params.userId;
+  const zapId = req.params.zapId;
+  const body = req.body;
+  console.log(zapId);
   //we can add the password logic to verify the user who hitting the hook server
   await client.$transaction(async (tx) => {
     const run = await tx.zapRun.create({
@@ -23,7 +24,6 @@ app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
       },
     });
   });
-
   res.json({
     message: "Message Recieved",
   });
