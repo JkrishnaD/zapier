@@ -44,10 +44,11 @@ model Trigger {
 //zap to actions is one-to-many relation
 model Action {
   id                String           @id @default(uuid())
-  metadata          Json             @default("{}")
   zapId             String
-  Zap               Zap              @relation(fields: [zapId], references: [id])
   availableActionId String
+  metadata          Json             @default("{}")
+  sortingOrder      Int              @default(0)
+  Zap               Zap              @relation(fields: [zapId], references: [id])
   type              AvailableActions @relation(fields: [availableActionId], references: [id])
 }
 
@@ -70,7 +71,7 @@ model AvailableTrigger {
 model ZapRun {
   id          String     @id @default(uuid())
   zapId       String
-  metadata    Json      
+  metadata    Json
   zapOutboxId ZapOutbox?
   zap         Zap        @relation(fields: [zapId], references: [id])
 }
