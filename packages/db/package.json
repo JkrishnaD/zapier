@@ -10,6 +10,7 @@
     "prisma": "^5.21.1"
   },
   "exports": {
+    "./index": "./dist/index.js",
     "./config": "./src/index.ts"
   },
   "prisma": {
