@@ -3,5 +3,5 @@
   "compilerOptions": {
     "rootDir": "/src/index.ts",
     "outDir": "./dist"
-  },
+  },"include": ["*"]
 }
