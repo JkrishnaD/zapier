@@ -41,6 +41,7 @@ router.post("/signin", async (req, res): Promise<any> => {
   );
 
   res.json({
+    userId:user.id,
     token: token,
   });
 });
@@ -67,7 +68,7 @@ router.post("/signup", async (req, res): Promise<any> => {
     });
   }
 
-  await prismaClient.user.create({
+  const user = await prismaClient.user.create({
     data: {
       name: parsedData.data.name,
       email: parsedData.data.email,
@@ -75,8 +76,16 @@ router.post("/signup", async (req, res): Promise<any> => {
     },
   });
 
+  const token = jwt.sign(
+    {
+      id: user.id,
+    },
+    JWT_PASSWORD
+  );
+
   res.json({
-    message: "User profile created",
+    userId:user.id,
+    token: token,
   });
 });
 

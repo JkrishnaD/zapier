@@ -31,6 +31,8 @@ model Zap {
   actions   Action[]
   zapRuns   ZapRun[]
   user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // zap to trigger is one-to-one relation
