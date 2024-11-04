@@ -25,6 +25,7 @@ export interface Zap {
       type: {
         id: string;
         name: string;
+        image: string;
         metadata: object;
       };
     },
@@ -37,6 +38,7 @@ export interface Zap {
     type: {
       id: string;
       name: string;
+      image: string;
       metadata: object;
     };
   };
@@ -85,8 +87,12 @@ const DashboardPage = () => {
             <div className="text-center mr-2 flex justify-center items-center h-full">
               <Loader className="size-5 animate-spin text-muted-foreground" />
             </div>
+          ) : zaps && zaps.length > 0 ? (
+            <ZapsTable zaps={zaps} userId={userId} />
           ) : (
-            <ZapsTable zaps={zaps} />
+            <div className="flex justify-center items-center text-xl h-[60vh]">
+              Create a zap to see
+            </div>
           )}
         </div>
       </div>

@@ -1,12 +1,35 @@
-import { PrismaClient } from '@prisma/client';
-import { useState } from "react"
-import { useUserId } from './use-user-id';
+"use client";
+import { useUserId } from "./use-user-id";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "@/config";
 
-const prismaClient = new PrismaClient()
+export const useCurrentuser = () => {
+  const [userId] = useUserId();
+  const [user, setUser] = useState<null>(null);
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-export const useCurrentuser = async ()=>{
-   const [userId,setUserId] = useUserId() 
-   const user = await prismaClient.user.findFirst({
+  useEffect(() => {
+    if (userId) {
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get(
+            `${BACKEND_URL}/api/v1/user/${userId}`,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+          setUser(response.data);
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      };
 
-   })
-}
+      fetchUser();
+    }
+  }, [token, userId]);
+
+  return user;
+};

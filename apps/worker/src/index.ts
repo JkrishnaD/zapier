@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { Kafka } from "kafkajs";
 
-const client = new PrismaClient();
 const TOPIC_NAME = "zap-events";
 
 const kafka = new Kafka({

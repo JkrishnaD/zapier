@@ -60,6 +60,7 @@ model Action {
 model AvailableActions {
   id       String   @id @default(uuid())
   name     String
+  image    String
   Action   Action[]
   metadata Json     @default("{}")
 }
@@ -68,6 +69,7 @@ model AvailableActions {
 model AvailableTrigger {
   id       String    @id @default(uuid())
   name     String
+  image    String
   triggers Trigger[]
   metadata Json      @default("{}")
 }
