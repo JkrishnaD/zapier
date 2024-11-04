@@ -1,5 +1,4 @@
 "use client";
-import { Appbar } from "@/components/appbar";
 import { Modal } from "@/components/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +25,7 @@ const CreatePage = () => {
       availableActionId: string;
       availableActionName: string;
       availableActionImage: string;
+      metadata: any;
     }[]
   >([]);
   const [selectedModalIndex, setSelectedModalIndex] = useState<null | number>(
@@ -46,7 +46,7 @@ const CreatePage = () => {
           tirggerMetadata: {},
           actions: selectedActions.map((x) => ({
             availableActionId: x.availableActionId,
-            actionMetadata: {},
+            actionMetadata: x.metadata,
           })),
         },
         {
@@ -62,111 +62,111 @@ const CreatePage = () => {
     }
   };
   return (
-    <div>
-      <Appbar />
-      <div className="bg-gray-100 h-[90vh] overflow-y-auto mt-4 w-full ">
-        <div className="flex justify-between p-4 mb-2">
-          <Button onClick={() => router.push("/dashboard")}>Go Back</Button>
-          <span className="flex items-center justify-center w-fit space-x-1 font-semibold">
-            <span>Zap</span>
-            <span>Title:</span>
-            <Input
-              onChange={(e) => setZapName(e.target.value)}
-              placeholder="Title"
-              className="py-4 w-[400px]"
-            />
-          </span>
-          <Button
-            onClick={handlePublish}
-            variant={"outline"}
-            className="bg-[#00a5ff] hover:bg-[#00a5ff]/75 text-white font-semibold"
-          >
-            Publish
-          </Button>
-        </div>
-        <div className="flex justify-center items-center flex-col">
-          <div className="flex overflow-y-hidden">
-            <ZapCell
-              onClick={() => {
-                setSelectedModalIndex(1);
-              }}
-              name={
-                selectedTrigger
-                  ? selectedTrigger.availableTriggerName
-                  : "Trigger"
-              }
-              index={1}
-              image={selectedTrigger?.availableTriggerImage}
-            />
-          </div>
-          <div>
-            {selectedActions.map((action, index) => (
-              <ZapCell
-                onClick={() => setSelectedModalIndex(action.index)}
-                key={index}
-                name={action ? action.availableActionName : "Action"}
-                index={action.index}
-                image={action.availableActionImage}
-              />
-            ))}
-          </div>
-          <Button
-            className="rounded-full p-3"
-            variant="outline"
+    <div className="bg-gray-100 h-screen overflow-y-auto w-full pt-10 ">
+      <div className="flex justify-between p-4 mb-2">
+        <Button onClick={() => router.push("/dashboard")}>Go Back</Button>
+        <span className="flex items-center justify-center w-fit space-x-1 font-semibold">
+          <span>Zap</span>
+          <span>Title:</span>
+          <Input
+            onChange={(e) => setZapName(e.target.value)}
+            placeholder="Title"
+            className="py-4 w-[400px]"
+          />
+        </span>
+        <Button
+          onClick={handlePublish}
+          variant={"outline"}
+          className="bg-[#00a5ff] hover:bg-[#00a5ff]/75 text-white font-semibold"
+        >
+          Publish
+        </Button>
+      </div>
+      <div className="flex justify-center items-center flex-col">
+        <div className="flex overflow-y-hidden">
+          <ZapCell
             onClick={() => {
-              setSelectedActions((a) => [
-                ...a,
-                {
-                  index: a.length + 2,
-                  availableActionId: "",
-                  availableActionName: "Action",
-                  availableActionImage: "",
-                },
-              ]);
+              setSelectedModalIndex(1);
             }}
-          >
-            <Plus />
-          </Button>
-          <div className="bg-gray-100">
-            {selectedModalIndex !== null && (
-              <Modal
-                isOpen={true}
-                index={selectedModalIndex}
-                onSelect={(
-                  props: null | { name: string; id: string; image: string }
-                ) => {
-                  if (props === null) {
-                    setSelectedModalIndex(null);
-                    return;
-                  }
-
-                  if (selectedModalIndex === 1) {
-                    setSelectedTrigger({
-                      availableTriggerId: props.id,
-                      availableTriggerName: props.name,
-                      availableTriggerImage: props.image,
-                    });
-                  } else {
-                    setSelectedActions((a) => {
-                      const newAction = [...a];
-                      newAction[selectedModalIndex - 2] = {
-                        index: selectedModalIndex,
-                        availableActionId: props.id,
-                        availableActionName: props.name,
-                        availableActionImage: props.image,
-                      };
-                      return newAction;
-                    });
-                  }
-                }}
-                availableItems={
-                  selectedModalIndex === 1
-                    ? availableTriggers
-                    : availableActions
+            name={
+              selectedTrigger ? selectedTrigger.availableTriggerName : "Trigger"
+            }
+            index={1}
+            image={selectedTrigger?.availableTriggerImage}
+          />
+        </div>
+        <div>
+          {selectedActions.map((action, index) => (
+            <ZapCell
+              onClick={() => setSelectedModalIndex(action.index)}
+              key={index}
+              name={action ? action.availableActionName : "Action"}
+              index={action.index}
+              image={action.availableActionImage}
+            />
+          ))}
+        </div>
+        <Button
+          className="rounded-full p-3"
+          variant="outline"
+          onClick={() => {
+            setSelectedActions((a) => [
+              ...a,
+              {
+                index: a.length + 2,
+                availableActionId: "",
+                availableActionName: "Action",
+                availableActionImage: "",
+                metadata: {},
+              },
+            ]);
+          }}
+        >
+          <Plus />
+        </Button>
+        <div className="bg-gray-100">
+          {selectedModalIndex !== null && (
+            <Modal
+              isOpen={true}
+              index={selectedModalIndex}
+              onSelect={(
+                props: null | {
+                  name: string;
+                  id: string;
+                  image: string;
+                  metadata: any;
                 }
-              />
-            )}
-          </div>
+              ) => {
+                if (props === null) {
+                  setSelectedModalIndex(null);
+                  return;
+                }
+
+                if (selectedModalIndex === 1) {
+                  setSelectedTrigger({
+                    availableTriggerId: props.id,
+                    availableTriggerName: props.name,
+                    availableTriggerImage: props.image,
+                  });
+                } else {
+                  setSelectedActions((a) => {
+                    const newAction = [...a];
+                    newAction[selectedModalIndex - 2] = {
+                      index: selectedModalIndex,
+                      availableActionId: props.id,
+                      availableActionName: props.name,
+                      availableActionImage: props.image,
+                      metadata: props.metadata,
+                    };
+                    return newAction;
+                  });
+                }
+              }}
+              availableItems={
+                selectedModalIndex === 1 ? availableTriggers : availableActions
+              }
+            />
+          )}
         </div>
       </div>
     </div>

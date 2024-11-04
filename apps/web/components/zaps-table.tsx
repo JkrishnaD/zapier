@@ -45,6 +45,7 @@ export const ZapsTable = ({ zaps, userId }: ZapsTableProps) => {
               {zap.createdAt
                 ? new Date(zap.createdAt).toLocaleString("en-US", {
                     dateStyle: "short",
+                    timeStyle:"short"
                   })
                 : "now"}
             </TableCell>
