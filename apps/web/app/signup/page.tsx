@@ -24,7 +24,7 @@ const SignupPage = () => {
     });
     localStorage.setItem("userId",res.data.userId)
     localStorage.setItem("token", res.data.token);
-    router.push("/dashboard");
+    router.push("/login");
   };
   return (
     <section className="min-h-screen w-full bg-gray-100">

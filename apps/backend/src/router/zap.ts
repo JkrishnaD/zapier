@@ -84,7 +84,6 @@ router.get(
   authMiddleware,
   async (req, res): Promise<any> => {
     const userId = parseInt(req.params.userId);
-    console.log(userId)
     const zapId = req.body.zapId;
     const zap = await prismaClient.zap.findMany({
       where: {

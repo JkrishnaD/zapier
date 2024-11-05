@@ -21,7 +21,6 @@ const LoginPage = () => {
       password,
     });
     localStorage.setItem("userId",res.data.userId)
-    console.log(res.data)
     localStorage.setItem("token", res.data.token);
     router.push("/dashboard");
   };

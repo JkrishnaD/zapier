@@ -23,7 +23,7 @@ async function main() {
       });
 
       //stop the program for 1 second
-      await new Promise((r) => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 5000));
       console.log("process done");
       
       await consumer.commitOffsets([

@@ -9,7 +9,6 @@ export function EmailSelector({
 }) {
   const [email, setEmail] = useState("");
   const [body, setBody] = useState("");
-  console.log(email)
   return (
     <div className="flex flex-col space-y-2">
       <Input

@@ -63,10 +63,8 @@ const DashboardPage = () => {
         setZaps(res.data.zaps);
         setIsLoading(false);
       });
-    console.log(token);
   }, [setUserId, userId]);
 
-  console.log("zaps", zaps);
   return (
     <div className="h-screen">
       <Appbar />
