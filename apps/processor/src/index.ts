@@ -19,14 +19,14 @@ async function main() {
       take: 10,
     });
     // pendingRun is an Array of zap's which are active
-
+    console.log(pendingRun);
     producer.send({
       topic: TOPIC_NAME,
       messages: pendingRun.map((r) => ({
-        value: r.zapRunId,
+        value: JSON.stringify({ zapRunId: r.zapRunId, stage: 0 }),
       })),
     });
-    
+
     //after sending the zap from outbox to kafka queue we delete them from the outbox table
     await client.zapOutbox.deleteMany({
       where: {
@@ -35,6 +35,8 @@ async function main() {
         },
       },
     });
+
+    await new Promise((r) => setTimeout(r, 5000));
   }
 }
 
