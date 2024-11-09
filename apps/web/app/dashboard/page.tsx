@@ -52,18 +52,24 @@ const DashboardPage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setUserId(Number(localStorage.getItem("userId")));
-    axios
-      .get(`${BACKEND_URL}/api/v1/zap/${userId}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((res) => {
-        setZaps(res.data.zaps);
-        setIsLoading(false);
-      });
-  }, [setUserId, userId]);
+
+    if (!token) {
+      router.replace("/login");
+    } else {
+      setUserId(Number(localStorage.getItem("userId")));
+
+      axios
+        .get(`${BACKEND_URL}/api/v1/zap/${userId}`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((res) => {
+          setZaps(res.data.zaps);
+          setIsLoading(false);
+        });
+    }
+  }, [router, setUserId, userId]);
 
   return (
     <div className="h-screen">

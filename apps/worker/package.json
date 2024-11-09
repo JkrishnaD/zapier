@@ -10,6 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@solana/web3.js": "^1.95.4",
+    "@types/bs58": "^4.0.4",
     "kafkajs": "^2.2.4"
   }
 }

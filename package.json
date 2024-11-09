@@ -21,6 +21,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "prisma": "^5.21.1"
+    "prisma": "^5.21.1",
+    "resend": "^4.0.1-alpha.0"
   }
 }

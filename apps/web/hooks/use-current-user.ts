@@ -3,14 +3,19 @@ import { useUserId } from "./use-user-id";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "@/config";
+import { useRouter } from "next/navigation";
 
 export const useCurrentuser = () => {
+  const router = useRouter();
   const [userId] = useUserId();
   const [user, setUser] = useState<null>(null);
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   useEffect(() => {
-    if (userId) {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) {
+      router.replace("/login");
+    } else if (userId) {
       const fetchUser = async () => {
         try {
           const response = await axios.get(
@@ -29,7 +34,7 @@ export const useCurrentuser = () => {
 
       fetchUser();
     }
-  }, [token, userId]);
+  }, [router, userId]);
 
   return user;
 };

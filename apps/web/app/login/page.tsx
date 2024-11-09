@@ -6,7 +6,7 @@ import { BACKEND_URL } from "@/config";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
@@ -15,12 +15,19 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      router.replace("/dashboard");
+    }
+  }, [router]);
+
   const handleSubmit = async () => {
     const res = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, {
       email,
       password,
     });
-    localStorage.setItem("userId",res.data.userId)
+    localStorage.setItem("userId", res.data.userId);
     localStorage.setItem("token", res.data.token);
     router.push("/dashboard");
   };

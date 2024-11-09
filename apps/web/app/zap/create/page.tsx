@@ -8,7 +8,7 @@ import { useGetTriggersActions } from "@/hooks/use-get-triggers-actions";
 import axios from "axios";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const CreatePage = () => {
@@ -33,6 +33,13 @@ const CreatePage = () => {
   );
   const { availableTriggers, availableActions } = useGetTriggersActions();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.replace("/login");
+    }
+  }, [router]);
+  
   const handlePublish = async () => {
     try {
       if (!selectedTrigger?.availableTriggerId) {
