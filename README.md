@@ -87,18 +87,6 @@ The `packages` folder contains shared resources, primarily focused on the databa
 
 - **Seeding**: To populate the database with initial data, use the following Prisma commands
 
-```bash
-npx primsa migrate dev
-```
-
-```bash
-npx primsa generate
-```
-```
-npx prisma db seed
-```
-
-  
 
 ## Getting Started
 
@@ -148,9 +136,20 @@ docker  run  -p  5432:5432  -e  POSTGRES_PASSWORD=mysecretpassword  -d  postgres
 DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
 ```
 
+5. Run some prisma commands to see populate the schema in the database
+
+```bash
+npx primsa migrate dev
+
+npx primsa generate
+
+npx prisma db seed
+```
+
+  
   
 
-5. To run Kafka locally, use:
+6. To run Kafka locally, use:
 
   
 
@@ -160,7 +159,7 @@ docker  run  -p  9092:9092  -d  apache/kafka:3.7.1
 
   
 
-6. To create a topic inside your kafka server run these commands in cli commands
+7. To create a topic inside your kafka server run these commands in cli commands
 ```bash
 docker  ps
 ```
@@ -174,7 +173,7 @@ cd  /opt/kafka/bin
 
   
 
-7. To create a Kafka topic named `zap-events`, use:
+8. To create a Kafka topic named `zap-events`, use:
 
   
 
@@ -184,7 +183,7 @@ cd  /opt/kafka/bin
 
   
 
-8. To consume events from the `zap-events` topic, use:
+9. To consume events from the `zap-events` topic, use:
 
   
 
@@ -194,7 +193,7 @@ cd  /opt/kafka/bin
 
   
 
-after installing the packages by going into each folder and run :
+10. After installing the packages by going into each folder and run :
 ```
 npm run dev
 ```
