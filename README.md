@@ -215,7 +215,7 @@ If our webhook is triggered with following data format:
 }}
 ```
 then in the email and address inputs for the actions should be in the following form :
-``` json
+```
 {comment.email},
 {comment.address},
 {comment.amount}
