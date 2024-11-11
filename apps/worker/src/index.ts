@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import { JsonObject } from "@prisma/client/runtime/library";
 import { parse } from "./parse";
 import { sendEmails } from "./mail";
+import { sendSolana } from "./send-sol";
 
 const TOPIC_NAME = "zap-events";
 const client = new PrismaClient();
@@ -88,6 +89,7 @@ async function main() {
           zapRunMetadata
         );
         console.log(`Sending ${amount}sol for ${address}`);
+        await sendSolana(address,amount)
       }
       //stop the program for 5 second
       await new Promise((r) => setTimeout(r, 5000));
