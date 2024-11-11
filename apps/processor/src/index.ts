@@ -19,6 +19,7 @@ async function main() {
       take: 10,
     });
     // pendingRun is an Array of zap's which are active
+    console.log(pendingRun);
     producer.send({
       topic: TOPIC_NAME,
       messages: pendingRun.map((r) => ({
