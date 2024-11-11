@@ -11,16 +11,18 @@ jobs:
     name: Buid the project
     runs-on: ubuntu-latest
     steps:
-        
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3 #In this line code clones into the ubuntu machine
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3 #Install node into ubuntu-machine
         with:
           node-version: "20"
 
       - name: Install Dependencies
         run: npm install
+
+      - name: Generate prisma client
+        run: npm run db:generate
 
       - name: Run Build
         run: npm run build
